@@ -1,0 +1,8 @@
+const passwordActionType = {
+  PASSWORDGENERATE: "PASSWORDGENERATE",
+  GETALLPASSWORD: "GETALLPASSWORD",
+  EDITWPM: "EDDITWPM",
+  DELETEWPM: "DELETEWPM",
+};
+
+export default passwordActionType;

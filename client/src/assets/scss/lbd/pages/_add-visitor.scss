@@ -1,0 +1,120 @@
+.pos-rel-overflow-hide{
+    position: relative;
+    overflow: hidden;
+}
+table{
+    .timing-header{
+        position: relative;
+        background: #FFF;
+        background-color: #FFF;
+        z-index: 9;
+        border-top: 1px solid #dee2e6;
+    }
+}
+.table-reservation{
+    tr{
+        td{
+            .custom-control-label::before,
+            .custom-control-label::after{
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}
+.credit-container{
+    position: absolute;
+    width: 1020px;
+    height: 300px;
+    top: -300px;
+    right: 5px;
+    z-index: 999;
+    background: #f2f2f2;
+    padding: 15px;
+    border-right: 1px solid #DDD;
+    border-left: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    border-radius: 0 0 6px 6px;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    &.open{
+        top: 0;
+    }
+    .btn-credit{
+        background: #1DC7EA;
+        color: #FFF;
+        border: none;
+        width: 100px;
+        transform: rotate(0deg);
+        position: absolute;
+        bottom: -30px;
+        right: 10px;
+        height: 30px;
+        border-radius: 0 0 6px 6px;
+    }
+    .credit-ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li{
+            div{
+                
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                p{
+                    font-size: 14px;
+                    small{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    .tab-content{
+        max-height: 240px;
+        font-size: 14px;
+        .table-responsive{
+            max-height: 220px;
+            overflow: auto;
+            table{
+                margin-bottom: 0;
+            }
+        }
+    }
+    .card-header-tabs{
+        margin: 0;
+        .nav-link{
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+    .avail-credit-title{
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0 0 15px 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .credit-container {        
+        max-width: 100%;
+        .row{
+            height: 260px;
+            overflow: auto;
+        }
+        .card-header-tabs{
+            .nav-link{
+                font-size: 12px;
+                font-weight: 600;
+                padding: 0.5rem 0.5rem;
+            }
+        }
+        .table{
+            td,th{
+                white-space: nowrap;
+            }
+        }
+    }
+}

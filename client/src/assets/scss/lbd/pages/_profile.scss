@@ -1,0 +1,17 @@
+.input-mask-btn{
+    position: relative;
+    input{
+        height: 44px;
+    }
+    .mask-password{
+        background: transparent;
+        border: none;
+        color: #9A9A9A;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 44px;
+        width: 40px;
+        padding: 0;
+    }
+}
