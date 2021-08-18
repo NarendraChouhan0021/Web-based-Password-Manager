@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import Loader from "../Loader/Loader";
 import DataTable from "react-data-table-component";
-import DatatableHeader from "../DatatableHeader/DatatableHeader";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import history from "../../history";
 import { GeneratePasswordAction } from "../../Actions";
-
+import CustomContentAlert from "../helper";
 class LandingPage extends Component {
   constructor(props) {
     super(props);
@@ -68,7 +67,11 @@ class LandingPage extends Component {
             <CopyToClipboard
               text={row.password}
               onCopy={() => {
-                return this.setState({ copied: true });
+                this.setState({ copied: true }, () => {
+                  setTimeout(() => {
+                    this.setState({ copied: false });
+                  }, 1000);
+                });
               }}
             >
               <i className="far fa-copy" />
@@ -91,8 +94,11 @@ class LandingPage extends Component {
     ];
   }
 
-  handleEdit = () => {
-    history.push("/to-edit-password");
+  handleEdit = (id) => {
+    history.push({
+      pathname: "/to-edit-password",
+      search: `?${id}`,
+    });
   };
 
   handleDelete = async (_id) => {
@@ -123,13 +129,13 @@ class LandingPage extends Component {
         pagination={true}
         responsive={true}
         subHeader
-        subHeaderComponent={
-          <DatatableHeader
-            Header={"Passwords"}
-            searchValue={this.state.searchValue}
-            HandleChange={this.handleSearchChange}
-          />
-        }
+        // subHeaderComponent={
+        //   <DatatableHeader
+        //     Header={"Passwords"}
+        //     searchValue={this.state.searchValue}
+        //     HandleChange={this.handleSearchChange}
+        //   />
+        // }
         defaultSortAsc={true}
         fixedHeader={true}
         fixedHeaderScrollHeight="40vh"
@@ -189,6 +195,13 @@ class LandingPage extends Component {
             </Col>
           </Row>
         </Container>
+        {this.state.copied && (
+          <CustomContentAlert
+            delay={2000}
+            message={"copied"}
+            className="toast-success"
+          />
+        )}
       </div>
     );
   }

@@ -13,31 +13,50 @@ class EditPassword extends Component {
       isFormValid: false,
     };
   }
+
   componentDidMount() {
-    console.log(this.props);
     this.setState(
       {
-        website_name: this.props.website_name,
-        _id: this.props._id,
-        isFormValid: true, // temp until api
+        _id:
+          this.props.location &&
+          this.props.location.search &&
+          this.props.location.search.split("?")[1]
+            ? this.props.location.search.split("?")[1]
+            : "",
       },
       async () => {
-        const { _id, website_name } = this.state;
-        await this.props.handleEdit(_id, website_name);
+        await this.props.getEditDetails(this.state._id);
+        this.setState(
+          {
+            website_name: this.props.website_name,
+            isFormValid: true, // temp until api
+          },
+          async () => {}
+        );
       }
     );
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.password !== this.props.password) {
+      this.setState({ GeneratedPassword: this.props.password });
+    }
+  }
+
   handleGeneratePassword = async () => {
-    const { website_name } = this.state;
+    const { _id, website_name } = this.state;
     this.setState({ GeneratedPassword: this.props.password });
-    await this.props.GeneratePassword(website_name);
+    await this.props.handleEdit(_id, website_name);
   };
+
   handleSubmit = () => {
     history.push("/wbp");
   };
+
   handleBack = () => {
     history.push("/wbp");
   };
+
   render() {
     const { website_name, GeneratedPassword, isFormValid } = this.state;
     return (
@@ -56,7 +75,7 @@ class EditPassword extends Component {
                     <Col md="3" className="pr-md-1">
                       <Form.Group>
                         <label>
-                          website_name Name
+                          website Name
                           <span className="asterisk">*</span>
                         </label>
                         <Form.Control
@@ -120,14 +139,16 @@ class EditPassword extends Component {
 }
 
 const mapStateToProps = ({ PasswordGeneraterDetails }) => {
-  const { password, _id, website_name } =
-    PasswordGeneraterDetails.editedPassword;
+  const { password, _id } = PasswordGeneraterDetails.editedPassword;
+  const { detailsForEdit } = PasswordGeneraterDetails;
+  const { website_name } = detailsForEdit;
   return { password, website_name, _id };
 };
 
 const mapStateToDispatch = {
   GeneratePassword: GeneratePasswordAction.GeneratePassword,
   handleEdit: GeneratePasswordAction.handleEdit,
+  getEditDetails: GeneratePasswordAction.getEditDetails,
 };
 
 export default connect(mapStateToProps, mapStateToDispatch)(EditPassword);

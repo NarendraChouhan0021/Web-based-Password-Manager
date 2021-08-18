@@ -12,20 +12,25 @@ class GeneratePassword extends Component {
       isFormValid: false,
     };
   }
+
   handleChange = (event) => {
     this.setState({ website_name: event.target.value, isFormValid: true });
   };
+
   handleGeneratePassword = async () => {
     const { website_name } = this.state;
     this.setState({ GeneratedPassword: this.props.password });
     await this.props.GeneratePassword(website_name);
   };
+
   handleSubmit = () => {
     history.push("/wbp");
   };
+
   handleBack = () => {
     history.push("/wbp");
   };
+
   render() {
     const { website_name, GeneratedPassword, isFormValid } = this.state;
     console.log("zzzzzzzz", this.state.GeneratedPassword);
@@ -38,7 +43,6 @@ class GeneratePassword extends Component {
                 <Card.Header>
                   <Card.Title as="h4">Generate New Password</Card.Title>
                 </Card.Header>
-            
                 <Card.Body className="pos-rel-overflow-hide">
                   <h4 className="mt-0 mb-2">Enter website_name Name</h4>
                   <Row>

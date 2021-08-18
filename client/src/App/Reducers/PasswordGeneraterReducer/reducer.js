@@ -4,6 +4,7 @@ const initialstate = {
   password: "",
   GetAllPassword: [],
   editedPassword: "",
+  detailsForEdit: "",
 };
 
 const UserReducer = (state = initialstate, action) => {
@@ -23,6 +24,12 @@ const UserReducer = (state = initialstate, action) => {
       };
       return name;
     }
+    case t.GETEDIT: {
+      return {
+        ...state,
+        detailsForEdit: action.payload,
+      };
+    }
     case t.EDITWPM: {
       const editedPassword = {
         ...state,
@@ -32,15 +39,15 @@ const UserReducer = (state = initialstate, action) => {
       return editedPassword;
     }
     case t.DELETEWPM: {
-      console.log("state.GetAllPassword", state.GetAllPassword)
-      console.log("action.payload", action.payload)
+      console.log("state.GetAllPassword", state.GetAllPassword);
+      console.log("action.payload", action.payload);
       const newPassword = state.GetAllPassword.filter((gap) => {
-        return gap._id !== action.payload
+        return gap._id !== action.payload;
       });
-      console.log("newPassword.................", newPassword)
+      console.log("newPassword.................", newPassword);
       const msg_delete = {
         ...state,
-        GetAllPassword: newPassword
+        GetAllPassword: newPassword,
       };
       return msg_delete;
     }

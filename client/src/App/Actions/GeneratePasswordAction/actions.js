@@ -1,5 +1,5 @@
 import t from "./types";
-import t_ from "../APIResponseActions/type"
+import t_ from "../APIResponseActions/type";
 import { API } from "../../../Auth/requestHandler";
 
 export const GetWpmList = () => async (dispatch) => {
@@ -16,15 +16,12 @@ export const GetWpmList = () => async (dispatch) => {
   }
 };
 
-
 export const GeneratePassword = (website_name) => async (dispatch) => {
-  console.log("website_name", website_name)
+  console.log("website_name", website_name);
   try {
-    const { status, message, res } = await API(
-      "generate-passoword",
-      "POST",
-      { website_name }
-    );
+    const { status, message, res } = await API("generate-passoword", "POST", {
+      website_name,
+    });
     if (status === 200) {
       await dispatch({ type: t.PASSWORDGENERATE, payload: res.password });
       await dispatch({ type: t_.API_RESPONSE_SUCCESS, payload: message });
@@ -39,7 +36,7 @@ export const GeneratePassword = (website_name) => async (dispatch) => {
 export const handleEdit = (_id, website_name) => async (dispatch) => {
   try {
     const url = "edit-passoword/" + _id;
-    const { status, message, res } = await API(url, "PUT", website_name);
+    const { status, message, res } = await API(url, "PUT", { website_name });
     if (status === 200) {
       await dispatch({ type: t_.API_RESPONSE_SUCCESS, payload: message });
       await dispatch({ type: t.EDITWPM, payload: res });
@@ -54,7 +51,7 @@ export const handleEdit = (_id, website_name) => async (dispatch) => {
 export const handleDelete = (id) => async (dispatch) => {
   try {
     const url = "delete-wpm/" + id;
-    const { status, message, res } = await API(url, "DELETE");
+    const { status, message } = await API(url, "DELETE");
     if (status === 200) {
       await dispatch({ type: t.DELETEWPM, payload: id });
       await dispatch({ type: t_.API_RESPONSE_SUCCESS, payload: message });
@@ -63,5 +60,20 @@ export const handleDelete = (id) => async (dispatch) => {
     }
   } catch (error) {
     await dispatch({ type: t_.API_RESPONSE_FAILURE, payload: error });
+  }
+};
+
+export const getEditDetails = (_id) => async (dispatch) => {
+  try {
+    const url = "get-wpm/" + _id;
+    const { status, message, res } = await API(url, "GET");
+    if (status === 200) {
+      await dispatch({ type: t.GETEDIT, payload: res });
+      await dispatch({ type: t_.API_RESPONSE_SUCCESS, payload: message });
+    } else {
+      await dispatch({ type: t_.API_RESPONSE_SUCCESS, payload: message });
+    }
+  } catch (error) {
+    console.log("error", error);
   }
 };

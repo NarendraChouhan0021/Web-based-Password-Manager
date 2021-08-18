@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Toast } from "react-bootstrap";
-import ContentLoader from "react-content-loader";
 
 const CustomContentAlert = (value) => {
   const [show, setShow] = useState(true);
+  console.log("dasdasdasd");
   return (
     <Row>
       <Col md={12}>
@@ -22,3 +22,5 @@ const CustomContentAlert = (value) => {
     </Row>
   );
 };
+
+export default CustomContentAlert;
