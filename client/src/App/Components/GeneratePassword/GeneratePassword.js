@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import history from "../../history";
-import { GeneratePasswordAction } from "../../Actions";
+import { WpmAction } from "../../Actions";
+
 class GeneratePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      GeneratedPassword: "",
+      randomSecurePassword: "",
       website_name: "",
       isFormValid: false,
     };
@@ -19,8 +20,8 @@ class GeneratePassword extends Component {
 
   handleGeneratePassword = async () => {
     const { website_name } = this.state;
-    this.setState({ GeneratedPassword: this.props.password });
-    await this.props.GeneratePassword(website_name);
+    this.setState({ randomSecurePassword: this.props.password });
+    await this.props.generatePassword(website_name);
   };
 
   handleSubmit = () => {
@@ -32,8 +33,7 @@ class GeneratePassword extends Component {
   };
 
   render() {
-    const { website_name, GeneratedPassword, isFormValid } = this.state;
-    console.log("zzzzzzzz", this.state.GeneratedPassword);
+    const { website_name, randomSecurePassword, isFormValid } = this.state;
     return (
       <div>
         <Container fluid>
@@ -44,7 +44,7 @@ class GeneratePassword extends Component {
                   <Card.Title as="h4">Generate New Password</Card.Title>
                 </Card.Header>
                 <Card.Body className="pos-rel-overflow-hide">
-                  <h4 className="mt-0 mb-2">Enter website_name Name</h4>
+                  <h3 className="mt-0 mb-2">Enter Website Name</h3>
                   <Row>
                     <Col md="3" className="pr-md-1">
                       <Form.Group>
@@ -53,7 +53,7 @@ class GeneratePassword extends Component {
                           <span className="asterisk">*</span>
                         </label>
                         <Form.Control
-                          placeholder="linkedin"
+                          placeholder="Website Name"
                           type="text"
                           name="website_name"
                           value={website_name}
@@ -77,8 +77,8 @@ class GeneratePassword extends Component {
                         <label>Generated Password</label>
                         <Form.Control
                           placeholder="Generated Password will be shown here"
-                          name="GeneratedPassword"
-                          value={GeneratedPassword}
+                          name="randomSecurePassword"
+                          value={randomSecurePassword}
                           disabled
                         />
                       </Form.Group>
@@ -114,13 +114,13 @@ class GeneratePassword extends Component {
   }
 }
 
-const mapStateToProps = ({ PasswordGeneraterDetails }) => {
-  const { password } = PasswordGeneraterDetails;
+const mapStateToProps = ({ wpm }) => {
+  const { password } = wpm;
   return { password };
 };
 
 const mapStateToDispatch = {
-  GeneratePassword: GeneratePasswordAction.GeneratePassword,
+  generatePassword: WpmAction.generatePassword,
 };
 
 export default connect(mapStateToProps, mapStateToDispatch)(GeneratePassword);

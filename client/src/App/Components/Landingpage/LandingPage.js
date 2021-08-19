@@ -5,15 +5,15 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import history from "../../history";
-import { GeneratePasswordAction } from "../../Actions";
+import { WpmAction } from "../../Actions";
 import CustomContentAlert from "../helper";
+
 class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      PasswordList: [],
+      passwordList: [],
       loader: false,
-      searchedPasswordList: [],
       password: "",
       copied: false,
     };
@@ -21,18 +21,18 @@ class LandingPage extends Component {
     this.customStyles = {
       rows: {
         style: {
-          minHeight: "72px", // override the row height
+          minHeight: "72px",
         },
       },
       headCells: {
         style: {
-          paddingLeft: "8px", // override the cell padding for head cells
+          paddingLeft: "8px",
           paddingRight: "8px",
         },
       },
       cells: {
         style: {
-          paddingLeft: "8px", // override the cell padding for data cells
+          paddingLeft: "8px",
           paddingRight: "8px",
         },
       },
@@ -79,13 +79,13 @@ class LandingPage extends Component {
             <i
               className="far fa-edit"
               onClick={() => {
-                this.handleEdit(row._id, row.website_name);
+                this.editWpm(row._id, row.website_name);
               }}
             />
             <i
               className="far fa-trash-alt"
               onClick={() => {
-                this.handleDelete(row._id);
+                this.delWpm(row._id);
               }}
             />
           </>
@@ -94,48 +94,40 @@ class LandingPage extends Component {
     ];
   }
 
-  handleEdit = (id) => {
+  editWpm = (id) => {
     history.push({
-      pathname: "/to-edit-password",
+      pathname: "/edit-password",
       search: `?${id}`,
     });
   };
 
-  handleDelete = async (_id) => {
-    await this.props.handleDelete(_id);
+  delWpm = async (_id) => {
+    await this.props.delWpm(_id);
   };
 
   componentDidMount() {
     this.setState({ loader: true }, async () => {
-      await this.props.GetWpmList();
-      const password = this.props.GetAllPassword;
-      this.setState({ PasswordList: password, loader: false });
+      await this.props.getWpmList();
+      const password = this.props.wpmList;
+      this.setState({ passwordList: password, loader: false });
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.GetAllPassword !== this.props.GetAllPassword) {
-      this.setState({ PasswordList: this.props.GetAllPassword });
+    if (prevProps.wpmList !== this.props.wpmList) {
+      this.setState({ passwordList: this.props.wpmList });
     }
   }
 
-  dataTableHandle = (searchValue, searchedPasswordList, PasswordList) => {
+  dataTableHandle = (passwordList) => {
     return (
       <DataTable
-        // data={searchValue.length ? searchedResidentList : residentList}
-        data={PasswordList}
+        data={passwordList}
         columns={this.columns}
         customStyles={this.customStyles}
         pagination={true}
         responsive={true}
         subHeader
-        // subHeaderComponent={
-        //   <DatatableHeader
-        //     Header={"Passwords"}
-        //     searchValue={this.state.searchValue}
-        //     HandleChange={this.handleSearchChange}
-        //   />
-        // }
         defaultSortAsc={true}
         fixedHeader={true}
         fixedHeaderScrollHeight="40vh"
@@ -143,13 +135,12 @@ class LandingPage extends Component {
     );
   };
 
-  handlePasswordGenerated = () => {
-    history.push("/to-generate-password");
+  createPassword = () => {
+    history.push("/generate-password");
   };
 
   render() {
-    const { loader, searchValue, searchedPasswordList, PasswordList } =
-      this.state;
+    const { loader, passwordList } = this.state;
     return (
       <div>
         <Container fluid>
@@ -165,7 +156,7 @@ class LandingPage extends Component {
                     </div>
                     <div>
                       <Button
-                        onClick={() => this.handlePasswordGenerated()}
+                        onClick={() => this.createPassword()}
                         type="button"
                         variant="primary"
                       >
@@ -179,12 +170,8 @@ class LandingPage extends Component {
                     <Loader />
                   ) : (
                     <>
-                      {PasswordList && PasswordList.length ? (
-                        this.dataTableHandle(
-                          searchValue,
-                          searchedPasswordList,
-                          PasswordList
-                        )
+                      {passwordList && passwordList.length ? (
+                        this.dataTableHandle(passwordList)
                       ) : (
                         <div className="help-block">No data found</div>
                       )}
@@ -207,15 +194,15 @@ class LandingPage extends Component {
   }
 }
 
-const mapStateToProps = ({ PasswordGeneraterDetails }) => {
-  const { GetAllPassword } = PasswordGeneraterDetails;
-  return { GetAllPassword };
+const mapStateToProps = ({ wpm }) => {
+  const { wpmList } = wpm;
+  return { wpmList };
 };
 
 const mapStateToDispatch = {
-  GetWpmList: GeneratePasswordAction.GetWpmList,
-  handleEdit: GeneratePasswordAction.handleEdit,
-  handleDelete: GeneratePasswordAction.handleDelete,
+  getWpmList: WpmAction.getWpmList,
+  editWpm: WpmAction.editWpm,
+  delWpm: WpmAction.delWpm,
 };
 
 export default connect(mapStateToProps, mapStateToDispatch)(LandingPage);

@@ -1,4 +1,4 @@
-import * as GeneratePasswordAction from "./GeneratePasswordAction/actions";
+import * as WpmAction from "./WpmAction/actions";
 import * as APIResponseActions from "./APIResponseActions/action";
 
-export { GeneratePasswordAction, APIResponseActions };
+export { WpmAction, APIResponseActions };

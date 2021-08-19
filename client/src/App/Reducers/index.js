@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
-import PasswordGeneraterReducer from "./PasswordGeneraterReducer/reducer";
-import APIResponseReducer from "./APIResponseReducer/reducer";
+import WpmReducer from "./Wpm/reducer";
+import APIResponseReducer from "./ApiResponse/reducer";
 import { connectRouter } from "connected-react-router";
 
 const rootReducer = (history) =>
   combineReducers({
     router: connectRouter(history),
-    PasswordGeneraterDetails: PasswordGeneraterReducer,
-    APIResponseDatils: APIResponseReducer,
+    wpm: WpmReducer,
+    APIStatus: APIResponseReducer,
   });
 
 export default rootReducer;

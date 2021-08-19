@@ -1,9 +1,0 @@
-const passwordActionType = {
-  PASSWORDGENERATE: "PASSWORDGENERATE",
-  GETALLPASSWORD: "GETALLPASSWORD",
-  EDITWPM: "EDDITWPM",
-  DELETEWPM: "DELETEWPM",
-  GETEDIT: "GETEDIT",
-};
-
-export default passwordActionType;

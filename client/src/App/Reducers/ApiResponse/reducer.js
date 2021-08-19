@@ -3,18 +3,10 @@ import t from "../../Actions/APIResponseActions/type";
 const intitialState = {
   api_response: true,
   api_error_message: "",
-  api_success_message: "",
 };
 
 const APIResponseReducer = (state = intitialState, action) => {
   switch (action.type) {
-    case t.API_RESPONSE_SUCCESS:
-      return {
-        ...state,
-        api_response: true,
-        api_error_message: "",
-        api_success_message: action.payload,
-      };
     case t.API_RESPONSE_FAILURE:
       return {
         ...state,

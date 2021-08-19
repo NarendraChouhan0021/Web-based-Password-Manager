@@ -1,36 +1,35 @@
-import t from "../../Actions/GeneratePasswordAction/types";
+import t from "../../Actions/WpmAction/types";
 
 const initialstate = {
   password: "",
-  GetAllPassword: [],
+  wpmList: [],
   editedPassword: "",
   detailsForEdit: "",
 };
 
-const UserReducer = (state = initialstate, action) => {
+const WpmReducer = (state = initialstate, action) => {
   switch (action.type) {
-    case t.PASSWORDGENERATE: {
+    case t.GENERATE_PASSWORD: {
       const pass = {
         ...state,
         password: action.payload,
       };
-      console.log("from reducer", pass);
       return pass;
     }
-    case t.GETALLPASSWORD: {
+    case t.wpmList: {
       const name = {
         ...state,
-        GetAllPassword: action.payload,
+        wpmList: action.payload,
       };
       return name;
     }
-    case t.GETEDIT: {
+    case t.GET_WPM_RECORD: {
       return {
         ...state,
         detailsForEdit: action.payload,
       };
     }
-    case t.EDITWPM: {
+    case t.EDIT_WPM: {
       const editedPassword = {
         ...state,
         editedPassword: action.payload,
@@ -38,16 +37,16 @@ const UserReducer = (state = initialstate, action) => {
       console.log("edit from reducer:", editedPassword);
       return editedPassword;
     }
-    case t.DELETEWPM: {
-      console.log("state.GetAllPassword", state.GetAllPassword);
+    case t.DELETE_WPM: {
+      console.log("state.wpmList", state.wpmList);
       console.log("action.payload", action.payload);
-      const newPassword = state.GetAllPassword.filter((gap) => {
+      const newPassword = state.wpmList.filter((gap) => {
         return gap._id !== action.payload;
       });
       console.log("newPassword.................", newPassword);
       const msg_delete = {
         ...state,
-        GetAllPassword: newPassword,
+        wpmList: newPassword,
       };
       return msg_delete;
     }
@@ -56,4 +55,4 @@ const UserReducer = (state = initialstate, action) => {
   }
 };
 
-export default UserReducer;
+export default WpmReducer;

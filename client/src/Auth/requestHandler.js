@@ -1,4 +1,4 @@
-import Config from "./config";
+const baseURL = "http://localhost:8080/v1/wpm";
 
 export const API = async (url, type, body_details) => {
   type = type.toUpperCase();
@@ -23,7 +23,7 @@ export const API = async (url, type, body_details) => {
     }
   }
   try {
-    const resourse = `${Config.baseURL}/${url}`;
+    const resourse = `${baseURL}/${url}`;
     const res = await fetch(resourse, API_details);
     const data = await res.json();
     return data;

@@ -1,6 +1,5 @@
 const APIResponseType = {
-  API_RESPONSE_SUCCESS: 'API_RESPONSE_SUCCESS',
-  API_RESPONSE_FAILURE: 'API_RESPONSE_FAILURE'
-}
+  API_RESPONSE_FAILURE: "API_RESPONSE_FAILURE",
+};
 
-export default APIResponseType
+export default APIResponseType;

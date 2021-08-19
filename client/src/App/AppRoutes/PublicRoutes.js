@@ -13,16 +13,19 @@ const PublicRoutes = (props) => {
         path="/wpm"
         render={() => <LandingPage {...props} history={history} />}
       />
+
       <Route
         exact
-        path="/to-generate-password"
+        path="/generate-password"
         render={() => <GeneratePassword {...props} history={history} />}
       />
+
       <Route
         exact
-        path="/to-edit-password"
+        path="/edit-password"
         render={() => <EditPassword {...props} history={history} />}
       />
+
       <Route render={() => <Redirect to="/wpm" {...props} />} />
     </Switch>
   );

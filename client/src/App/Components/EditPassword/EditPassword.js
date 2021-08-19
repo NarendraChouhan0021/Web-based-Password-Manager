@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import history from "../../history";
-import { GeneratePasswordAction } from "../../Actions";
+import { WpmAction } from "../../Actions";
 class EditPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       _id: "",
-      GeneratedPassword: "",
+      randomSecurePassword: "",
       website_name: "",
       isFormValid: false,
     };
@@ -25,7 +25,7 @@ class EditPassword extends Component {
             : "",
       },
       async () => {
-        await this.props.getEditDetails(this.state._id);
+        await this.props.getWpmByID(this.state._id);
         this.setState(
           {
             website_name: this.props.website_name,
@@ -39,14 +39,14 @@ class EditPassword extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.password !== this.props.password) {
-      this.setState({ GeneratedPassword: this.props.password });
+      this.setState({ randomSecurePassword: this.props.password });
     }
   }
 
   handleGeneratePassword = async () => {
     const { _id, website_name } = this.state;
-    this.setState({ GeneratedPassword: this.props.password });
-    await this.props.handleEdit(_id, website_name);
+    this.setState({ randomSecurePassword: this.props.password });
+    await this.props.editWpm(_id, website_name);
   };
 
   handleSubmit = () => {
@@ -58,7 +58,7 @@ class EditPassword extends Component {
   };
 
   render() {
-    const { website_name, GeneratedPassword, isFormValid } = this.state;
+    const { website_name, randomSecurePassword, isFormValid } = this.state;
     return (
       <div>
         <Container fluid>
@@ -101,8 +101,8 @@ class EditPassword extends Component {
                         <label>Generated Password</label>
                         <Form.Control
                           placeholder="Generated Password will be shown here"
-                          name="GeneratedPassword"
-                          value={GeneratedPassword}
+                          name="randomSecurePassword"
+                          value={randomSecurePassword}
                           disabled
                         />
                       </Form.Group>
@@ -138,17 +138,16 @@ class EditPassword extends Component {
   }
 }
 
-const mapStateToProps = ({ PasswordGeneraterDetails }) => {
-  const { password, _id } = PasswordGeneraterDetails.editedPassword;
-  const { detailsForEdit } = PasswordGeneraterDetails;
+const mapStateToProps = ({ wpm }) => {
+  const { detailsForEdit } = wpm;
   const { website_name } = detailsForEdit;
+  const { password, _id } = wpm.editedPassword;
   return { password, website_name, _id };
 };
 
 const mapStateToDispatch = {
-  GeneratePassword: GeneratePasswordAction.GeneratePassword,
-  handleEdit: GeneratePasswordAction.handleEdit,
-  getEditDetails: GeneratePasswordAction.getEditDetails,
+  editWpm: WpmAction.editWpm,
+  getWpmByID: WpmAction.getWpmByID,
 };
 
 export default connect(mapStateToProps, mapStateToDispatch)(EditPassword);
