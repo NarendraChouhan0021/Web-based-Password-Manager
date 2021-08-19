@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-express-sequelize-postgresql",
+  "name": "sequelize-postgresql",
   "version": "1.0.0",
   "description": "Node.js Rest Apis with Express, Sequelize & PostgreSQL",
   "main": "server.js",
@@ -14,7 +14,7 @@
     "api",
     "postgresql"
   ],
-  "author": "bezkoder",
+  "author": "narendra",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
