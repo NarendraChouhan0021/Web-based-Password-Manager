@@ -37,15 +37,11 @@ class LandingPage extends Component {
         },
       },
     };
-    let i = 0;
     this.columns = [
       {
         name: "Sr.no",
         sortable: true,
-        cell: (row) => {
-          i++;
-          return i;
-        },
+        cell: () => "#",
       },
       {
         name: "web Site Name",
