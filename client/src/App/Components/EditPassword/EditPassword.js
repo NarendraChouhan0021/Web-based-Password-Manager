@@ -61,7 +61,7 @@ class EditPassword extends Component {
     const { website_name, randomSecurePassword, isFormValid } = this.state;
     return (
       <div>
-        <Container fluid>
+        <Container fluid className="mt-5">
           <Row>
             <Col md="12">
               <Card>

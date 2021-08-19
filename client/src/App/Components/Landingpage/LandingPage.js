@@ -143,9 +143,9 @@ class LandingPage extends Component {
     const { loader, passwordList } = this.state;
     return (
       <div>
-        <Container fluid>
+        <Container fluid className="mt-5">
           <Row>
-            <Col md="12">
+            <Col md="10" className="offset-md-1">
               <Card>
                 <Card.Header>
                   <div className="d-flex align-items-center justify-content-between">
